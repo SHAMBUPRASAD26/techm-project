@@ -1,0 +1,66 @@
+<div class="page-wrapper">
+  <div class="background-image"></div>
+  
+  <!-- Header -->
+  <header class="header">
+    <a routerLink="/" class="logo">
+      <span class="logo-text">FoodReview</span>
+    </a>
+    <nav class="nav-links">
+      <a routerLink="/" class="nav-link">Home</a>
+      <a routerLink="/restaurants" class="nav-link">Restaurants</a>
+      <a routerLink="/auth/login" class="nav-link active">Login</a>
+      <a routerLink="/auth/register" class="nav-link">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="login-container">
+    <div class="login-box">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" formControlName="username" class="form-control">
+          <div class="error-message" *ngIf="username.invalid && (username.dirty || username.touched)">
+            <div *ngIf="username.errors?.['required']">Username is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              id="password" 
+              formControlName="password" 
+              class="form-control"
+            >
+            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+              <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+            </button>
+          </div>
+          <div class="error-message" *ngIf="password.invalid && (password.dirty || password.touched)">
+            <div *ngIf="password.errors?.['required']">Password is required</div>
+          </div>
+        </div>
+
+        <div class="error-message" *ngIf="error">
+          {{ error }}
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid || isSubmitting">
+          {{ isSubmitting ? 'Logging in...' : 'Login' }}
+        </button>
+      </form>
+
+      <div class="forgot-password">
+        <a routerLink="/auth/forgot-password">Forgot Password?</a>
+      </div>
+
+      <div class="register-link">
+        Don't have an account? <a routerLink="/auth/register">Register here</a>
+      </div>
+    </div>
+  </div>
+</div> 
